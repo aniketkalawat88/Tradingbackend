@@ -21,8 +21,14 @@ const UserSchema = mongoose.Schema({
         type:String,
         required:true,
     },
+    amount:{
+        type:Number,
+        default : 0
+    }
 })
 
+
+// password hash
 UserSchema.pre("save" , async function(next){
     try{
         if(this.isModified("password")){
@@ -37,6 +43,7 @@ UserSchema.pre("save" , async function(next){
 })
 
 
+// token send
 UserSchema.methods.generateToken = async function(){
     try{
         return jwt.sign(

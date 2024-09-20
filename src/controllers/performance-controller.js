@@ -20,7 +20,7 @@ const PostPerformance = async (req ,res) => {
         res.status(201).json({msg:"Top User Created Succesfully" , data : isPerformance});
     }
     catch(e){
-        res.status(500).json({ msg: "Error creating performance", error: e.message });
+        return res.status(500).json({ msg: "Error creating performance", error: e.message });
     }
     
 }
@@ -31,7 +31,7 @@ const GetPerformance = async (req ,res) => {
         res.status(201).json({message:"All Perfomer data" , val : allPerformer})
 
     }catch(e){
-        res.status(400).json({msg:"error getperformer " , val : e})
+        return res.status(400).json({msg:"error getperformer " , val : e})
         console.log(e)
     }
 }
@@ -56,7 +56,7 @@ const UpdatePerformance = async (req ,res) => {
     }
     catch(err){
         console.log("Error During Updation" ,err)
-        res.status(500).json({ msg: "Error updating performance", error: err });
+        return res.status(500).json({ msg: "Error updating performance", error: err });
     }
 
 }
