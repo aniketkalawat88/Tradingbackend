@@ -1,6 +1,7 @@
 const UserController = require("../model/UserSchema");
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken');
+const nodemailer = require("nodemailer")
 
 const SECRET_KEY = "NOTESAPI"
 
@@ -73,4 +74,107 @@ const updateAmount = async (req ,res) => {
     }
 }
 
-module.exports = { PostRegister , PostLogin , GetUser , updateAmount }
+const forgetPassword = async (req ,res) => {
+    const {email } = req.body;
+    try{
+        const oldUser = await UserController.findOne({email : email });
+        if(!oldUser){
+            return res.status(400).json({message : "User Not Exist"})
+        }
+        const secret = SECRET_KEY + oldUser.password;
+        const token = jwt.sign({email : oldUser.email ,id: oldUser._id} , secret, {
+            expiresIn:'5m'
+        })
+
+        const link = `http://localhost:8000/api/forget-password/${oldUser._id}/${token}`
+        // console.log(link)
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'aniketkalawat88@gmail.com',
+              pass: 'vfvw hxnc zqnw bkyk'
+            }
+          });
+          
+          var mailOptions = {
+            from: 'youremail@gmail.com',
+            to: 'aniketkalawat100@gmail.com',
+            subject: 'Password reset',
+            text: link
+          };
+          
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+
+        res.send("done")
+
+    }catch(e){
+        return res.status(500).json({message: 'error update amount' , error: err.message });   
+    }
+}
+
+const getForgetPassword = async ( req ,res) => {
+   try{
+    const {id , token} = req.params;
+    console.log(req.params)
+    const oldUser = await UserController.findOne({ _id : id});
+    if(!oldUser){
+        return res.status(400).json({message : "User Not Exist"})
+    }
+    const secret = SECRET_KEY + oldUser.password;
+    try{
+        const verify = jwt.verify(token , secret)
+        res.send("verified")
+    }
+    catch(err){
+        res.send("Not Verifid")
+    }
+    res.send(req.params)
+   }
+   catch(err){
+    return res.send(err)
+   }
+}
+
+const PostResetPassword = async ( req ,res) => {
+   try{
+    const {id , token} = req.params;
+    const { password } = req.body;
+
+    const oldUser = await UserController.findOne({ _id : id});
+    if(!oldUser){
+        return res.status(400).json({message : "User Not Exist"})
+    }
+    const secret = SECRET_KEY + oldUser.password;
+    try{
+        const verify = jwt.verify(token , secret)
+        const encrypt =  await bcrypt.hash(password , 10)
+        await UserController.updateOne({
+            _id : id
+        },
+        {
+            $set : {
+                password : encrypt
+            }
+        }
+    )
+    res.json({status : "Password Updated Succesfully"})
+    res.render({email: verify.email , status:"verified"})
+    }
+    catch(err){
+        res.send({status : "Something went wrong"})
+    }
+    res.send(req.params)
+   }
+   catch(err){
+    return res.send(err)
+   }
+}
+
+
+module.exports = { PostRegister , PostLogin , GetUser , updateAmount , forgetPassword , getForgetPassword , PostResetPassword}
