@@ -2,6 +2,7 @@ const UserController = require("../model/UserSchema");
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer")
+const cookie = require("cookie-parser")
 
 const SECRET_KEY = "NOTESAPI"
 
@@ -40,6 +41,7 @@ const PostLogin = async (req ,res) => {
             return res.status(401).json({message:"invalid credential"})
         }
         const token = jwt.sign({email : isValid.email , id :isValid._id} , SECRET_KEY)
+        
         res.status(201).json({user:isValid , token : token});
         
     }
@@ -59,6 +61,7 @@ const GetUser = async (req ,res) => {
         res.status(401).json({message:"Error fetching User data"})
     }
 }
+
 
 const updateAmount = async (req ,res) => {
     const { amount } = req.body;
@@ -177,4 +180,4 @@ const PostResetPassword = async ( req ,res) => {
 }
 
 
-module.exports = { PostRegister , PostLogin , GetUser , updateAmount , forgetPassword , getForgetPassword , PostResetPassword}
+module.exports = { PostRegister , PostLogin , GetUser , updateAmount , forgetPassword , getForgetPassword , PostResetPassword }

@@ -12,7 +12,7 @@ router.put("/topperformance/:id" , UpdatePerformance)
 router.delete("/topperformance/:id" , DeletePerformance)
 
 router.post("/register" , PostRegister)
-router.post("/login",authMiddleware , PostLogin)
+router.post("/login" , PostLogin)
 router.get("/user" , authMiddleware, GetUser )
 router.post("/update-amount" , authMiddleware , updateAmount)
 router.post("/forget-password"  , forgetPassword)
