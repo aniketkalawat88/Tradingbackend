@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer")
 const cookie = require("cookie-parser")
 
-const SECRET_KEY = "NOTESAPI"
+const SECRET_KEY = process.env.JWT_SECRET_KEY
 
 
 const PostRegister = async (req , res) => {
@@ -94,8 +94,8 @@ const forgetPassword = async (req ,res) => {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-              user: 'aniketkalawat88@gmail.com',
-              pass: 'vfvw hxnc zqnw bkyk'
+              user: process.env.MAIL_EMAIL_ADDRESS,
+              pass: process.env.MAIL_EMAIL_PASSWORD
             }
           });
           
