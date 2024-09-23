@@ -3,7 +3,7 @@ const SECRET_KEY = "NOTESAPI"
 
 const authMiddleware = (req, res, next) => {
     const token = req.header('Authorization');
-    if (!token) return res.status(401).json({ message: 'Access Denied' });
+    if (!token) return res.status(401).json({ message: 'Token Access Denied' });
   
     try {
       const verified = jwt.verify(token.split(' ')[1], SECRET_KEY); // Assuming 'Bearer <token>' format

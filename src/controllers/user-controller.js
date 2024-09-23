@@ -180,4 +180,5 @@ const PostResetPassword = async ( req ,res) => {
 }
 
 
+
 module.exports = { PostRegister , PostLogin , GetUser , updateAmount , forgetPassword , getForgetPassword , PostResetPassword }
