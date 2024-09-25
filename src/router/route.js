@@ -26,7 +26,7 @@ router.post("/competitor-data", PostCompetitor);
 router.get("/competitor-data", GetCompetitor);
 router.delete("/competitor-data/:id", deleteCompetitor);
 
-router.post("/live-data",authMiddleware, PostLive)
+router.post("/live-data", PostLive)
 router.get("/live-data", GetLive)
 router.delete("/live-data/:id", DeleteLive)
 
