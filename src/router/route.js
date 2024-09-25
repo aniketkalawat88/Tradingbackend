@@ -5,10 +5,12 @@ const { PostRegister, PostLogin, GetUser, updateAmount, forgetPassword, getForge
 const authMiddleware = require("../middlewares/auth-middleware");
 const { PostCompetitor, GetCompetitor, deleteCompetitor } = require("../controllers/competitor-controller");
 const { PostLive, GetLive, DeleteLive } = require("../controllers/liveaccount-controller");
+const { PostImg, DeleteImg } = require("../controllers/imgupload-controller");
+const upload = require("../middlewares/cloudinaryimg-middleware");
 
 const router = express.Router();
 
-router.post("/topperformance" , PostPerformance)
+router.post("/topperformance", upload.single('image') , PostPerformance)
 router.get("/topperformance" , GetPerformance)
 router.put("/topperformance/:id" , UpdatePerformance)
 router.delete("/topperformance/:id" , DeletePerformance)
@@ -29,5 +31,8 @@ router.delete("/competitor-data/:id", deleteCompetitor);
 router.post("/live-data", PostLive)
 router.get("/live-data", GetLive)
 router.delete("/live-data/:id", DeleteLive)
+
+router.post("/upload" , upload.single('image'), PostImg )
+router.delete("/upload" , upload.single('image'), DeleteImg )
 
 module.exports = router;

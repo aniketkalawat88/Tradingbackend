@@ -8,7 +8,9 @@ const PerformanceSchema = mongoose.Schema({
     description:{
         type:String,
         required:true,
-    }
+    },
+    imageUrl: { type: String, required: true },
+    cloudinaryId: { type: String, required: true },
 });
 
 const performancemodel = mongoose.model("topperformance" , PerformanceSchema);
