@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { PostPerformance, GetPerformance, UpdatePerformance, DeletePerformance } = require("../controllers/performance-controller");
+const { PostPerformance, GetPerformance, UpdatePerformance, DeletePerformance, GetPerformanceById } = require("../controllers/performance-controller");
 const { PostRegister, PostLogin, GetUser, updateAmount, forgetPassword, getForgetPassword, PostResetPassword } = require("../controllers/user-controller");
 const authMiddleware = require("../middlewares/auth-middleware");
 const { PostCompetitor, GetCompetitor, deleteCompetitor } = require("../controllers/competitor-controller");
@@ -10,10 +10,11 @@ const upload = require("../middlewares/cloudinaryimg-middleware");
 
 const router = express.Router();
 
-router.post("/topperformance", upload.single('image') , PostPerformance)
+router.post("/topperformance",  PostPerformance)
 router.get("/topperformance" , GetPerformance)
-router.put("/topperformance/:id" , UpdatePerformance)
+router.patch("/topperformance/:id" , UpdatePerformance)
 router.delete("/topperformance/:id" , DeletePerformance)
+router.get("/topperformance/:id" , GetPerformanceById)
 
 router.post("/register" , PostRegister)
 router.post("/login" , PostLogin)

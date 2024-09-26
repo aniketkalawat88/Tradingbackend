@@ -9,9 +9,12 @@ const PerformanceSchema = mongoose.Schema({
         type:String,
         required:true,
     },
-    imageUrl: { type: String, required: true },
-    cloudinaryId: { type: String, required: true },
-});
+    // imageUrl: { type: String, required: false },
+    // cloudinaryId: { type: String, required: false },
+    },
+    {timestamps: true}
+);
+
 
 const performancemodel = mongoose.model("topperformance" , PerformanceSchema);
 
