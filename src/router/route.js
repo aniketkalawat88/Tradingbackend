@@ -36,4 +36,5 @@ router.delete("/live-data/:id", DeleteLive)
 router.post("/upload" , upload.single('image'), PostImg )
 router.delete("/upload" , upload.single('image'), DeleteImg )
 
+
 module.exports = router;

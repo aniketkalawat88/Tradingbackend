@@ -1,26 +1,51 @@
 const express = require("express");
 const dotenv = require("dotenv")
-dotenv.config()
 const cors = require("cors"); 
 const app = express();
+const cookieParser = require("cookie-parser");
+
+dotenv.config()
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+
 const PORT = process.env.PORT;
 const routerData = require("./router/route")
 require("./db/conn")
 
-app.use(cors({
-    origin: (origin, callback) => {
-      if (process.env.FRONTEND_URLS.split(',').includes(origin)) {
+
+// app.use(cors({
+//     origin: process.env.FRONTEND_URLS,
+//     credentials: true,
+// }));
+const corsOptions = {
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+  
+      if (frontendUrls.includes(origin)) {
+        // Origin is allowed
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        // Origin is not allowed
+        callback(new Error("CORS policy violation: Origin not allowed"));
       }
     },
-    credentials: true,
-  }));
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true, // Allow cookies and authorization headers
+  };
 
-app.use(express.json());
+app.use(cors(corsOptions));
+
+
+
+app.use(cookieParser());
 app.use("/api" , routerData)
+
+app.use("*", (req, res) => {
+    return res.status(404).json({msg:"Page not found"});
+});
 
 app.listen(PORT , () => {
     console.log(`server is running on port no ${PORT}`);
