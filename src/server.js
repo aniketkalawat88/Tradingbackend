@@ -9,9 +9,15 @@ const routerData = require("./router/route")
 require("./db/conn")
 
 app.use(cors({
-    origin: process.env.FRONTEND_URLS,
+    origin: (origin, callback) => {
+      if (process.env.FRONTEND_URLS.split(',').includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
-}));
+  }));
 
 app.use(express.json());
 app.use("/api" , routerData)
