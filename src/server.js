@@ -15,7 +15,7 @@ require("./db/conn")
 
 
 app.use(cors({
-    origin: "https://tradingbackend-1.onrender.com/api/topperformance",
+    origin: "https://tradingbackend-1.onrender.com",
     methods:["GET","POST","PATCH","DELETE","PUT"],
     credentials: true,
 }));
