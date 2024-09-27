@@ -8,7 +8,7 @@ const SECRET_KEY = process.env.JWT_SECRET_KEY
 
 
 const PostRegister = async (req , res) => {
-    const { name , email , number , password} = req.body;
+    const { name , email , number , password , role} = req.body;
     const exisitngUser = await UserController.findOne({email : email});
     if(exisitngUser){
         return res.status(400).send("user already exist")
@@ -18,7 +18,8 @@ const PostRegister = async (req , res) => {
             name:name,
             email:email,
             number:number,
-            password : password
+            password : password,
+            role:role || 'user'
         })
         
         const token = jwt.sign({email : isRegister.email , id :isRegister._id} , SECRET_KEY)

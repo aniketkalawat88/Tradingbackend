@@ -25,11 +25,11 @@ router.get("/forget-password/:id/:token"  , getForgetPassword)
 router.post("/forget-password/:id/:token"  , PostResetPassword)
 
 
-router.post("/competitor-data", PostCompetitor);
+router.post("/competitor-data" , upload.single('image'), PostCompetitor);
 router.get("/competitor-data", GetCompetitor);
 router.delete("/competitor-data/:id", deleteCompetitor);
 
-router.post("/live-data", PostLive)
+router.post("/live-data",upload.single('image'), PostLive)
 router.get("/live-data", GetLive)
 router.delete("/live-data/:id", DeleteLive)
 
