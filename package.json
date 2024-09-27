@@ -1,4 +1,8 @@
 {
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon ./src/server.js"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.5.0",
