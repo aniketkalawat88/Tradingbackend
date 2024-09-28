@@ -5,10 +5,7 @@ const CompetitorControll = require("../model/CompetitorSchema")
 const PostCompetitor = async (req ,res) => {
     const { name , email ,number , range , trasitionid , amount } = req.body;
     
-    try{        
-        // const resultFront = await cloudinary.v2.uploader.upload(imageFront.path);
-        // const resultBack = await cloudinary.v2.uploader.upload(imageBack.path);
-        
+    try{ 
         if(!name || !email || !number || !range){
             return res.status(402).json({message:"Please fill all the field"})
         }
@@ -33,10 +30,6 @@ const PostCompetitor = async (req ,res) => {
                 imageUrl: imageUrl, 
                 cloudinaryId: cloudinaryId
             },
-            // imageBack: {
-            //     imageUrl: resultBack.secure_url, 
-            //     cloudinaryId: resultBack.public_id 
-            // }
         });
         res.status(201).json({message:"Data send Succesfully" , data : competitor})
     }

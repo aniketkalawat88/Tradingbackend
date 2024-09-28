@@ -29,10 +29,6 @@ const CompetitorSchema = mongoose.Schema({
         imageUrl: { type: String, required: false },
         cloudinaryId: { type: String, required: false }
     },
-    imageBack: {
-        imageUrl: { type: String, required: false },
-        cloudinaryId: { type: String, required: false }
-    },
 })
 
 const competitormodal = mongoose.model("competitor", CompetitorSchema);
