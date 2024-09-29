@@ -78,6 +78,8 @@ const getUserProfile = async (req, res) => {
                     name: user.name,
                     email: user.email,
                     number: user.number,
+                    isAdmin: user.isAdmin,
+                    amount: user.amount
                     // Add other fields as needed
                 }
             });
@@ -122,5 +124,15 @@ const updateUserProfile = async (req, res) => {
     }
 };
 
+const getAllUser = async (req ,res) => {
+    try{
+        const isUser = await User.find();
+        res.status(200).json({data:isUser})
+    }
+    catch(err){
+        return res.status(400).json({message:"Error fetching data" , data:err})
+    }
+}
 
-module.exports = { registerUser, loginUser , getUserProfile ,updateUserProfile };
+
+module.exports = { registerUser, loginUser , getUserProfile ,updateUserProfile, getAllUser };

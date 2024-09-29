@@ -15,6 +15,7 @@ const requestWithdrawal = async (req, res) => {
     }
 };
 
+
 // Admin Approves Withdrawal
 const approveWithdrawal = async (req, res) => {
     const { userId } = req.params;
@@ -23,7 +24,7 @@ const approveWithdrawal = async (req, res) => {
 
     if (user && user.amount >= amount) {
         // Logic to process refund
-        user.amount -= amount;
+        // user.amount -= amount;
         await user.save();
         res.json({ message: 'Withdrawal approved and processed' });
     } else {

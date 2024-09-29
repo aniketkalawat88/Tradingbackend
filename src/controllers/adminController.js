@@ -62,4 +62,14 @@ const approvePayment = async (req, res) => {
     }
 };
 
-module.exports = { approveUser, rejectUser, approvePayment };
+const userData = async(req, res)=>{
+    try{
+        const userdata = req.user; 
+        return res.status(200).json({userdata});
+    }catch(e){
+        console.log("error from adminController router",e);
+        
+    }
+}
+
+module.exports = { approveUser, rejectUser, approvePayment, userData };

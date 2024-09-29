@@ -49,6 +49,7 @@ const registerUser = async (req, res) => {
 };
 
 
+
 // Login User or Admin
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
